@@ -14,16 +14,22 @@ export default class QuotePostController extends ARouteController {
 
     constructor(config: IQuotePostControllerConfig) {
         super(config);
-        //this.config = config;
     }
 
-    routeHandler = async (request: Request, reply: IReply) => {
-        this.validate(request.payload, this.requestSchema)
-            .then(async (value) => {
-                await this.config.messageBrokerService.publish(this.config.routingKey, value);
-                this.replyOk(reply);
-            })
-            .catch((err) => { this.replyError(reply, err) });
+    routeHandler = async (request: Request, reply: IReply): Promise<void> => {
+        return new Promise<void>(async (resolve, reject) => {
+            let value: any;
+            try {
+                value = await this.validate(request.payload, this.requestSchema)
+            } catch (error) {
+                this.replyError(reply, error)
+            }
+
+            await this.config.messageBrokerService.publish(this.config.routingKey, value);
+            this.replyOk(reply);
+            resolve();
+        });
+
     }
 
     async validate(buffer: any, schema: Joi.Schema): Promise<any> {
