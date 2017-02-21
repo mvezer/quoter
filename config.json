@@ -1,0 +1,21 @@
+{
+    "HTTP_HOST":"localhost",
+    "HTTP_PORT":3000,
+
+    "QUOTE_BROKER_HOST":"localhost",
+    "QUOTE_BROKER_PORT":5672,
+    "QUOTE_BROKER_USER":"guest",
+    "QUOTE_BROKER_PASSWORD":"guest",
+    "QUOTE_BROKER_ROUTING_KEY":"quote_queue",
+    "QUOTE_BROKER_EXCHANGE":"default",
+
+    "QUOTE_REDIS_HOST":"localhost",
+    "QUOTE_REDIS_PORT":6379,
+    "QUOTE_REDIS_PASSWORD":"guest",
+    "QUOTE_REDIS_FAMILY":0,
+    "QUOTE_REDIS_DEFAULT_ID":1000,
+    "QUOTE_REDIS_LAST_ID_KEY":"last_id",
+    "QUOTE_REDIS_KEY_PREFIX":"quote",
+    "QUOTE_REDIS_KEY_SEPARATOR":":"
+    
+}

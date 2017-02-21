@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+    <title>Send a quote</title>
+
+    <style type="text/css">
+        body {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: lightgrey
+        }
+        
+        h2 {
+            font-weight: lighter
+        }
+        
+        #container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            /* bring your own prefixes */
+            transform: translate(-50%, -50%);
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD"
+        crossorigin="anonymous">
+
+</head>
+
+<body ng-app="easyShoppingListApp" ng-controller="ListsController">
+    <div id="container">
+        <h2>Quote has been sent</h2>
+        <p>Your quote has been succesfully forwarded, have a nice day :)</p>
+        <a href="/">Go back to the form</a>
+    </div>
+</body>
+
+</html>

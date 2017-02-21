@@ -1,0 +1,1 @@
+node ./build/lib/main.js %1

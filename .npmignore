@@ -1,0 +1,6 @@
+/src
+/*.js
+/build/test
+/tsconfig.json
+/.npmignore
+*_test.*

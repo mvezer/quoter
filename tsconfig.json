@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "sourceMap": true,
+    "declaration": false,
+    "rootDir": "./src",
+    "sourceRoot": "./src",
+    "outDir": "./build",
+    "lib":["es2016"],
+    "forceConsistentCasingInFileNames": true,
+    "pretty": true,
+    "typeRoots": [
+        "./node_modules/@types"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}

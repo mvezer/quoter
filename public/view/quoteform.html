@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+    <title>Send a quote</title>
+
+    <style type="text/css">
+        body {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: lightgrey
+        }
+        
+        h2 {
+            font-weight: lighter
+        }
+        
+        #container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            /* bring your own prefixes */
+            transform: translate(-50%, -50%);
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD"
+        crossorigin="anonymous">
+
+</head>
+
+<body ng-app="easyShoppingListApp" ng-controller="ListsController">
+    <div id="container">
+        <h2>Send a quote today</h2>
+        <form class="pure-form pure-form-aligned" action="http://localhost:3000/quote" method="POST">
+            <fieldset>
+                <div class="pure-control-group">
+                    <label for="author">Author</label>
+                    <input name="author" id="author" type="text" placeholder="author">
+                    <span class="pure-form-message-inline">required</span>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="quote">Quote</label>
+                    <textarea cols="40" rows="5" name="quote" id="quote" placeholder="quote text"></textarea>
+                    <span class="pure-form-message-inline">required</span>
+                </div>
+
+                <div class="pure-control-group">
+                    <label for="tags">Tags</label>
+                    <input name="tags" id="tags" type="text" placeholder="tags">
+                </div>
+
+                <button type="submit" class="pure-button pure-button-primary">Send quote</button>
+            </fieldset>
+        </form>
+    </div>
+</body>
+
+</html>
