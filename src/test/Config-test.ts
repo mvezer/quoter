@@ -13,10 +13,10 @@ describe("ConfigUtil", () => {
     });
 
     it('createUrl should generate valid urls', (done)=> {
-        expect(ConfigUtil.createUrl({protocol:"ampql",host:"localhost"})).to.equal("ampql://localhost");
-        expect(ConfigUtil.createUrl({protocol:"ampql",host:"localhost",port:5672})).to.equal("ampql://localhost:5672");
-        expect(ConfigUtil.createUrl({protocol:"ampql",host:"localhost",port:5672,username:"username"})).to.equal("ampql://username@localhost:5672");
-        expect(ConfigUtil.createUrl({protocol:"ampql",host:"localhost",port:5672,username:"username",password:"password"})).to.equal("ampql://username:password@localhost:5672");
+        expect(ConfigUtil.createUrl({protocol:"amqpl",host:"localhost"})).to.equal("amqpl://localhost");
+        expect(ConfigUtil.createUrl({protocol:"amqpl",host:"localhost",port:5672})).to.equal("amqpl://localhost:5672");
+        expect(ConfigUtil.createUrl({protocol:"amqpl",host:"localhost",port:5672,username:"username"})).to.equal("amqpl://username@localhost:5672");
+        expect(ConfigUtil.createUrl({protocol:"amqpl",host:"localhost",port:5672,username:"username",password:"password"})).to.equal("amqpl://username:password@localhost:5672");
         done();
     });
 });
