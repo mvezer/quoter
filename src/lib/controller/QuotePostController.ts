@@ -1,14 +1,11 @@
+import { QuoteSchema } from './../model/schema/QuoteSchema';
 import { IQuotePostControllerConfig } from "./IController";
 import { Request, IReply, IRouteConfiguration } from "hapi";
 import { ARouteController } from "./ARouteController";
 import * as Joi from "joi";
 
 export default class QuotePostController extends ARouteController {
-    private requestSchema: Joi.Schema = Joi.object().keys({
-        author: Joi.string().min(2).max(256).required(),
-        quote: Joi.string().min(2).max(2048).required(),
-        tags: Joi.string().min(2).max(512).allow("")
-    });
+
 
     protected config: IQuotePostControllerConfig;
 
@@ -19,7 +16,7 @@ export default class QuotePostController extends ARouteController {
     routeHandler = async (request: Request, reply: IReply): Promise<void> => {
         return new Promise<void>(async (resolve, reject) => {
             let value: any;
-            this.validate(request.payload, this.requestSchema)
+            this.validate(request.payload, QuoteSchema)
                 .then(async (payload) => {
                     await this.config.messageBrokerService.publish(this.config.routingKey, payload);
                     this.replyOk(reply);
