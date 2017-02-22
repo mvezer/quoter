@@ -13,6 +13,8 @@ export default class QuotePostController extends ARouteController {
     routeHandler = async (request: Request, reply: IReply): Promise<void> => {
         return new Promise<void>(async (resolve, reject) => {
             let value: any;
+
+            // TODO: after successful validation process tags field to array
             ValidationUtil.validate(request.payload, Schema.QuoteSchema)
                 .then(async (payload) => {
                     await this.config.messageBrokerService.publish(this.config.routingKey, payload);

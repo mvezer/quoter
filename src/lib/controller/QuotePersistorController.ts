@@ -1,5 +1,8 @@
+import * as Schema from './../model/Schema';
 import { AController } from "./AController";
 import { IQuotePersistorControllerConfig } from "./IController";
+import * as ValidationUtil from "../util/ValidationUtil";
+import * as AmqpLib from "amqplib";
 
 export default class QuotePersistorController extends AController {
     protected config: IQuotePersistorControllerConfig;
@@ -32,8 +35,22 @@ export default class QuotePersistorController extends AController {
         });
     }
 
-    private onQuoteMessageReceived = (msg: string) => {
-        this.config.storageService.setIncremental(this.config.keyPrefix, msg);
+    onQuoteMessageReceived = async (message: AmqpLib.Message): Promise<void> => {
+        return new Promise<void>(async (resolve, reject) => {
+            const messageText = message.content.toString();
+            console.log("Message received: ", messageText);
+            ValidationUtil.validate(message.content.toString(), Schema.QuoteSchema)
+                .then(async () => {
+                    await this.config.storageService.setIncremental(this.config.keyPrefix, messageText);
+                    this.config.messageBrokerService.ack(message);
+                    resolve();
+                })
+                .catch((error) => {
+                    console.log("Validation failed: ", error.message);
+                    //this.config.messageBrokerService.nack(message); // fixme: process the failed messages
+                })
+        });
+
     }
 
 }

@@ -27,7 +27,7 @@ export default class AmqpService extends AService {
 
     async createChannel(): Promise<void> {
         return new Promise<void>(async (resolve, reject) => {
-            
+
             if (!this.isConnected()) {
                 try {
                     await this.connect();
@@ -61,34 +61,25 @@ export default class AmqpService extends AService {
         });
     }
 
-    async consume(routingKey: string, onMessage: Function): Promise<void> {
+    async consume(routingKey: string, onMessage: (msg: AmqpLib.Message) => any): Promise<void> {
         return new Promise<void>(async (resolve, reject) => {
             if (!this.hasChannel) {
-                try {
-                    await this.createChannel();
-                } catch (error) {
-                    reject(error);
-                }
+                await this.createChannel();
             }
 
-            try {
-                await this.channel.assertQueue(routingKey);
-            } catch (error) {
-                reject(error);
-            }
-
-            try {
-                await this.channel.consume(routingKey, async (msg: AmqpLib.Message) => {
-                    console.log("Received: %s", msg.content.toString());
-                    onMessage(msg.content.toString());
-                    this.channel.ack(msg);
-                });
-            } catch (error) {
-                reject(error);
-            }
+            await this.channel.assertQueue(routingKey);
+            await this.channel.consume(routingKey, onMessage)
 
             resolve();
         });
+    }
+
+    ack(msg: AmqpLib.Message) {
+        this.channel.ack(msg);
+    }
+
+    nack(msg: AmqpLib.Message) {
+        this.channel.nack(msg);
     }
 
     isConnected(): boolean {
