@@ -2,14 +2,13 @@ import DefaultController from "./controller/DefaultController";
 import QuotePostController from "./controller/QuotePostController";
 import * as Factory from "./util/Factory";
 import AmqpService from "./service/AmqpService";
-import RedisService from "./service/RedisService";
 import ServerConfigModel from "./model/ServerConfigModel";
 import QuotePublisherController from "./controller/QuotePublisherController";
 import QuotePersistorController from "./controller/QuotePersistorController";
-import * as Hapi from "hapi";
 
 
 async function runPublisherService(config: ServerConfigModel) {
+    console.log("Publisher service started");
     const publisher: QuotePublisherController =
         new QuotePublisherController(Factory.CreateQuotePublisherControllerConfig(config))
             .addRouteController(new DefaultController({
@@ -21,14 +20,13 @@ async function runPublisherService(config: ServerConfigModel) {
                 routingKey: config.getEnv('quoteBrokerRoutingKey')
             }))
             .start()
-    console.log("Publisher service started");
 }
 
 async function runPersistorService(config: ServerConfigModel) {
+    console.log("Persistor service started");
     const persistor: QuotePersistorController =
         new QuotePersistorController(Factory.CreateQuotePersistorControllerConfig(config));
     await persistor.start();
-    console.log("Persistor service started");
 }
 
 const config: ServerConfigModel = new ServerConfigModel('config.json');
