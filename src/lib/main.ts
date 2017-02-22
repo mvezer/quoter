@@ -17,7 +17,7 @@ async function runPublisherService(config: ServerConfigModel) {
             }))
             .addRouteController(new QuotePostController({
                 method: "POST", path: "/quote",
-                messageBrokerService: new AmqpService(Factory.CreateAmpqServiceConfig(config)),
+                messageBrokerService: new AmqpService(Factory.CreateAmqpServiceConfig(config)),
                 routingKey: config.getEnv('quoteBrokerRoutingKey')
             }))
             .start()

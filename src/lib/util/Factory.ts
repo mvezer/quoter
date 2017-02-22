@@ -1,4 +1,4 @@
-import { IRedisServiceConfig, IAmpqServiceConfig, IConnectionConfig } from "../service/IService";
+import { IRedisServiceConfig, IAmqpServiceConfig, IConnectionConfig } from "../service/IService";
 import { IServerConfigModel } from "../model/IModel";
 import { IQuotePublisherControllerConfig, IQuotePersistorControllerConfig } from "../controller/IController";
 import * as Hapi from "hapi";
@@ -15,7 +15,7 @@ export function CreateQuotePublisherControllerConfig(configModel: IServerConfigM
     };
 }
 
-export function CreateAmpqServiceConfig(configModel: IServerConfigModel): IAmpqServiceConfig {
+export function CreateAmqpServiceConfig(configModel: IServerConfigModel): IAmqpServiceConfig {
     return {
         host: configModel.getEnv('quoteBrokerHost'),
         port: configModel.getEnv('quoteBrokerPort'),
@@ -39,7 +39,7 @@ export function CreateRedisServiceConfig(configModel: IServerConfigModel): IRedi
 
 export function CreateQuotePersistorControllerConfig(configModel: IServerConfigModel): IQuotePersistorControllerConfig {
     return {
-        messageBrokerService: new AmqpService(this.CreateAmpqServiceConfig(configModel)),
+        messageBrokerService: new AmqpService(this.CreateAmqpServiceConfig(configModel)),
         storageService: new RedisService(this.CreateRedisServiceConfig(configModel)),
         routingKey: configModel.getEnv('quoteBrokerRoutingKey'),
         keyPrefix: configModel.getEnv('quoteRedisKeyPrefix'),

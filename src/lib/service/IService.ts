@@ -11,7 +11,7 @@ export interface IConnectionConfig extends IConfig {
     family?:string|number;
 }
 
-export interface IAmpqServiceConfig extends IConnectionConfig {
+export interface IAmqpServiceConfig extends IConnectionConfig {
     queueName:string;
     defaulteExchange?:string;
 }

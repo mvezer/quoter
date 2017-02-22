@@ -1,14 +1,14 @@
 import * as AmqpLib from "amqplib";
-import { IAmpqServiceConfig } from "./IService";
+import { IAmqpServiceConfig } from "./IService";
 import { AService } from "./AService";
 import * as ConfigUtil from "../util/ConfigUtil";
 
 export default class AmqpService extends AService {
-    protected config: IAmpqServiceConfig;
+    protected config: IAmqpServiceConfig;
     private connection: AmqpLib.Connection;
     private channel: AmqpLib.Channel;
 
-    constructor(config: IAmpqServiceConfig) {
+    constructor(config: IAmqpServiceConfig) {
         super();
         this.config = config;
     }
