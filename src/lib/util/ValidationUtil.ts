@@ -7,7 +7,7 @@ export async function validate(buffer: any, schema: Joi.Schema): Promise<any> {
             if (err) {
                 reject(err);
             } else {
-                resolve(value);
+                resolve(buffer);
             }
         })
     });
