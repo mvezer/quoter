@@ -10,9 +10,8 @@ describe("QuotePostController", () => {
         routingKey: "routingKey",
         method: "POST",
         path: "/quote",
-        messageBrokerService: sinon.stub()
+        messageBrokerService: null
     };
-    quotePostControllerConfig.messageBrokerService.publish = sinon.stub();
 
     const validPayload = JSON.parse(' {"author":"Winnie The Pooh","quote":"I prefer hunny over cocaine","tags":"pooh winnie hunny cocaine"} ');
     const invalidPayload = JSON.parse(' {"wrongkey":"Winnie The Pooh","wrongkey2":"","wrongkey3":""} ');
@@ -25,6 +24,8 @@ describe("QuotePostController", () => {
 
     beforeEach(() => {
         quotePostController = new QuotePostController(quotePostControllerConfig);
+        quotePostControllerConfig.messageBrokerService = sinon.stub();
+        quotePostControllerConfig.messageBrokerService.publish = sinon.stub().returns(true);
         validRequest = sinon.stub();
         validRequest.payload = validPayload;
         invalidRequest = sinon.stub();
