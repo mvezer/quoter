@@ -19,17 +19,17 @@ export default class QuotePostController extends ARouteController {
     routeHandler = async (request: Request, reply: IReply): Promise<void> => {
         return new Promise<void>(async (resolve, reject) => {
             let value: any;
-            try {
-                value = await this.validate(request.payload, this.requestSchema)
-            } catch (error) {
-                this.replyError(reply, error)
-            }
-
-            await this.config.messageBrokerService.publish(this.config.routingKey, value);
-            this.replyOk(reply);
-            resolve();
+            this.validate(request.payload, this.requestSchema)
+                .then(async (payload) => {
+                    await this.config.messageBrokerService.publish(this.config.routingKey, payload);
+                    this.replyOk(reply);
+                    resolve();
+                })
+                .catch((error) => {
+                    this.replyError(reply, error);
+                    reject();
+                })
         });
-
     }
 
     async validate(buffer: any, schema: Joi.Schema): Promise<any> {
