@@ -27,7 +27,7 @@ export default class QuotePostController extends ARouteController {
                 })
                 .catch((error) => {
                     this.replyError(reply, error);
-                    reject();
+                    error.isJoi ? resolve() : reject(error);  // not rejecting validation errors
                 })
         });
     }
