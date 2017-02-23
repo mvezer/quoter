@@ -54,7 +54,7 @@ export default class AmqpService extends AService {
                 }
             }
 
-            this.channel.assertQueue(routingKey);
+            await this.channel.assertQueue(routingKey);
             this.channel.sendToQueue(routingKey, new Buffer(JSON.stringify(data)));
             console.log("Message sent", JSON.stringify(data));
             resolve();
