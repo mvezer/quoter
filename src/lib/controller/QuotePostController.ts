@@ -14,10 +14,9 @@ export default class QuotePostController extends ARouteController {
         return new Promise<void>(async (resolve, reject) => {
             let value: any;
 
-            // TODO: after successful validation process tags field to array
-            ValidationUtil.validate(request.payload, Schema.QuoteSchema)
+            ValidationUtil.validate(request.payload, Schema.QuotePublisherSchema)
                 .then(async (payload) => {
-                    await this.config.messageBrokerService.publish(this.config.routingKey, payload);
+                    await this.config.messageBrokerService.publish(this.config.routingKey, this.processQuote(payload));
                     this.replyOk(reply);
                     resolve();
                 })
@@ -26,6 +25,15 @@ export default class QuotePostController extends ARouteController {
                     error.isJoi ? resolve() : reject(error);  // not rejecting validation errors
                 })
         });
+    }
+
+    private processQuote(quote: Object): Object {
+        if (!quote["tags"]) {
+            return quote;
+        }
+        let processedQuote = ValidationUtil.clone(quote);
+        processedQuote["tags"] = String(quote["tags"]).split(" ");
+        return processedQuote;
     }
 
     private replyOk(reply: IReply) {

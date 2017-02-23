@@ -39,7 +39,7 @@ export default class QuotePersistorController extends AController {
         return new Promise<void>(async (resolve, reject) => {
             const messageText = message.content.toString();
             console.log("Message received: ", messageText);
-            ValidationUtil.validate(message.content.toString(), Schema.QuoteSchema)
+            ValidationUtil.validate(message.content.toString(), Schema.QuotePersistorSchema)
                 .then(async () => {
                     await this.config.storageService.setIncremental(this.config.keyPrefix, messageText);
                     this.config.messageBrokerService.ack(message);

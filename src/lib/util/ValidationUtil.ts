@@ -12,3 +12,8 @@ export async function validate(buffer: any, schema: Joi.Schema): Promise<any> {
         })
     });
 }
+
+// quote: "it's not stupid if it works" :)
+export function clone(object:Object): Object {
+    return JSON.parse(JSON.stringify(object));
+}
